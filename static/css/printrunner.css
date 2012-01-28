@@ -1,0 +1,221 @@
+@import ("webfonts.css");
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	padding-top: 22px;
+	background: #e9f2f9 url('../images/bgTotal.png') repeat-x left top;
+	font-size: 67.5%;
+	font-family: "Arial", sans-serif;
+}
+
+h1 {
+	font: normal 2em/1.5em "Arial", sans-serif;
+	color: #007700;
+}
+
+ul.nav {
+	position: relative;
+	margin: 0; padding: 0;
+	list-style-type: none;	
+}
+
+ul.nav > li {
+	position: relative;
+}
+
+#layout {
+	position: relative;
+	margin: auto;
+	min-height: 100%;
+	width: 970px;
+	background-color: white;
+	box-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+
+header {
+	position: relative;
+	width: 100%;
+	height: 130px;
+	background: transparent url('../images/bgSets.png') repeat-x left top;
+}
+
+header > ul.nav {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 40px;
+	background-color: #247eca;
+	box-shadow: 0 2px 4px rgba(0,0,0, 0.2);
+}
+
+header > ul.nav > li {
+	position: relative;
+	display: inline-block;
+	width: 18%;
+	height: 100%;
+	margin: 0; padding: 0;
+	text-align: center;
+	border-right: 1px solid #186cd0;
+	border-left: 1px solid #358cd7;
+	white-space: nowrap;
+}
+	header > ul.nav > li:first-child { width: 7%; }
+	
+header > ul.nav > li > a {
+	position: absolute;
+	left: 0; right: 0;
+	top: 0; bottom: 0;
+	padding: 8px 0;
+	background-color: transparent;
+	font: normal 1.6em/1.5em "Didact Gothic", sans-serif;
+	color: white;
+	text-decoration: none;
+}
+	header > ul.nav > li > a:hover {
+		background-color: white;
+		color: #247eca;
+	}
+	
+/* Common rules for top sections */
+section#left {
+	margin-top: 10px;
+}
+
+/* Left section	of content area */
+section#left {
+	float: left;
+	width: 165px;
+	padding-bottom: 50px;
+	overflow: hidden;
+}
+
+section#left > ul.nav {
+	margin-bottom: 25px;
+}
+
+section#left > ul.nav > li {
+	min-width: 100%;
+}
+
+section#left > ul.nav > li > a {
+	display: block;
+	padding: 5px 0;
+	color: #0567ab;
+	font-size: 1.1em;
+	text-decoration: none;
+	background-color: white;
+}
+	section#left > ul.nav > li > a:hover {
+		background-color: #247eca;
+		color: white;
+	}
+
+section#left > ul.nav > h2 {
+	margin: 0; padding: 7px 4px;
+	margin-bottom: 10px;
+	background-color: #eeeeee;
+	text-transform: uppercase;
+	font: bold 1.1em/1.2em "Arial", sans-serif;
+	box-shadow: 1px 2px 2px rgba(0,0,0,0.15);
+	color: #363636;
+}
+
+	section#left > ul.nav > h2, section#left > ul.nav > li > a { padding-left: 20px; }
+	
+/* Right section of content */	
+section#main {
+	position: relative;
+	margin-left: 180px;
+	height: 100%;
+}
+
+	/* Right section oriented by product page */
+	section#main.product {
+		padding: 10px 0 0 30px;
+	}
+	
+section#main > #content {
+	position: relative;
+	margin-right: 280px;
+	padding-right: 20px;
+}
+
+section#main > #content > #header {
+	position: relative;
+}
+
+section#main > #content > #header > ul.thesis {
+	width: 220px;
+	position: absolute;
+	right: 0; top: -20px;
+	margin: 0; padding: 0;
+	font: normal 1.1em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	list-style-position: inside;
+	list-style-type: square;
+}
+
+section#main > #content > #description {
+	margin-top: 50px;
+	font-size: 1.1em;
+	line-height: 1.6em;
+	color: #444;
+}
+
+section#main > #right {
+	float: right;
+	width: 260px;
+	margin: 0; padding: 0;
+	background-color: #f2f7fd;
+	border-left: 1px solid #e5eaf0;
+}
+
+	section#main > #right h2, section#main > #right h3 {
+		margin: 0; padding: 0;
+		color: #007700;
+	}	
+
+section#main > #right h2 {
+	height: 67px;
+	padding-top: 25px;
+	padding-left: 50px;
+	background: #bbe7bc url('../images/orderSets.jpg') no-repeat left top;
+}
+
+section#main > #right h3 {
+	height: 43px;
+	padding-top: 13px;
+	padding-left: 60px;
+	background: #e6edf7 url('../images/orderSets.jpg') no-repeat left top;
+}
+
+	section#main > #right > #order-options h3 { background-position-x: -260px; }
+	section#main > #right > #order-deliver h3 { background-position-x: -520px; }
+	
+section#main > #right > .price {
+	position: relative;
+	margin: 20px auto;
+	width: 60%;
+	padding: 20px;
+	background-color: white;
+	box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+section#main > #right > .block:last-child {
+	background: transparent url('../images/bg.jpg') no-repeat left bottom;
+	background-position-y: -1171px;
+}
+
+/* Bottom section content */
+section#footer {
+	clear: both;
+	min-height: 200px;
+	background: #f5f8fc url('../images/bgSets.png') repeat-x left -1570px;
+	border: 1px solid white;
+}

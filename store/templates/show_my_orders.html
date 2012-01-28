@@ -1,0 +1,12 @@
+Я заказывал: <br />
+<table border="1">
+	{% for order in orders %}
+	<tr>
+			<td>{{ order.id }}</td>
+			<td>{{ order.product }}, {{ order.format }}, {{ order.paper }}, {{ order.chromacity }}</td>
+			<td>{{ order.time }}</td>
+			<td>{{ order.cost }}</td>
+			<td>{{ order.order_status }}</td>
+	</tr>
+	{% endfor %}
+</table>

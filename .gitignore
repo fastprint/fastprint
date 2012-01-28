@@ -1,0 +1,13 @@
+*.pyc
+*.log
+*.db
+*.sql
+*.json
+.DS_Store*
+*.db
+*.idea*
+*.sublime-project
+*.sublime-workspace
+media/css
+media/js
+media/images

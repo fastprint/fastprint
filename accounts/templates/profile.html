@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block leftnav %}
+
+    <nav class="sidepanel">
+    	<h2>Личный кабинет</h2>
+    	<li><strong>Профиль пользователя</strong><div class="arrow-l abs-r"></div></li>
+    	<li><a href="/profile/orders/">История заказов</a></li>
+    </nav>
+
+{% endblock %}
+
+{% block content %}
+
+	<form method="POST" enctype="multipart/form-data" action="/profile/update/" class="forma tabed l-sided r-sided">
+		<ul>
+			<li><a href="#profile">Контактное лицо</a></li>
+			<li><a href="#deliver">Адреса доставки</a></li>
+		</ul>
+		<section id="profile">
+		    {{ form_profile.as_p }}
+		    <p class="required" class="central">
+		        <label>Форма оплаты</label>
+	            <span>
+	                <input type="radio" name="is_legal" value="0" class="switcher" {% if not profile.is_legal %}checked="checked"{% endif %} /> <span>Физическое лицо</span><br/>
+	                <input type="radio" name="is_legal" value="1" class="switcher" {% if profile.is_legal %}checked="checked"{% endif %} id="sw-legal" /> <span>Юридическое лицо</span>
+	            </span>
+		    </p>
+			<children parent="sw-legal" {% if not profile.is_legal %} class="hidden" {% endif %}>
+		        {{ form_legal.as_p }}
+			</children>
+		</section>
+		<section id="deliver">
+	        {{ form_delivery.as_p }}
+		</section>
+		<center><input type="submit" value="Сохранить данные" /></center>
+	</form>
+	<div class="sidepanel abs-r socialpanel">
+		<h2>Подключить эккаунт:</h2>
+	</div>
+
+{% endblock %}

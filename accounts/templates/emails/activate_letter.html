@@ -1,0 +1,16 @@
+{% extends "emails/base_letter.html" %}
+
+{% block title %}
+	Активация учетной записи 
+{% endblock %}
+
+{% block content %}
+	<p>
+		Добрый день!
+		Благодарим вас за проявленный интерес к <a href="http://fastprint.me">нашему сайту</a><br/>
+		Вы оставили свой e-mail в качестве контактного при регистрации на сайте.
+	</p>
+	<p>
+		Для подтверждения этого адреса, пожалуйста проследуйте по <a href="http://fastprint.me/activate/{{ name }}/{{ code }}">ссылке</a>
+	</p>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="message">
+		<h1>Эккаунт {{ username }} успешно активирован!</h1>
+		<p>
+			Через 10 секунд вы будете перенаправлены в свой <a href="/profile/">личный кабинет</a>
+			Помните! Для того, чтобы оформить онлайн-заказ, профиль должен быть заполнен.
+		</p>
+		$(location).attr('href', '/profile/').delay(10000);
+	</div>
+{% endblock %}

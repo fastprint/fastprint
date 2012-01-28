@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="message error">
+		<h1>Ошибка активации!</h1>
+		<p>
+			При активации учетной записи {{ username }} возникла ошибка<br/>
+			Пожалуйста, обратитесь в <a href="mailto:web@fastprint.info?subject=Ошибка активации&body=При активации пользователя {{ name }} возникла ошибка">службу поддержки</a>"
+		</p>
+		$(location).attr('href', '/profile/').delay(10000);
+	</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+body {
+	text-align: center;
+}
+
+.up { color: green; }
+.down { color: red; }
+
+#container {
+	position: relative;
+	margin: auto;
+	width: 550px;
+	text-align: center;
+}
+
+fieldset#filterpanel {
+	margin: 0;
+	background-color: gray;
+	border: none;
+	color: silver;
+}
+
+fieldset#filterpanel > legend {
+	background-color: white;
+	border: 1px solid gray;
+	font: bold 1em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: gray;
+}
+
+table.pricelist {
+	width: 100%;
+    font-family: "Verdana",arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #999999;
+    border-collapse: collapse;
+}
+
+table.pricelist tr > * {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #999;
+}
+
+table.pricelist th { background: #b5cfd2; white-space: nowrap; }
+
+table.pricelist > tbody > tr { background-color: #dcddc0; }
+table.pricelist > tbody > tr:nth-child(even) { background-color: #e7e8ca; }
+table.pricelist > tbody > tr:hover { background-color: #f0f0d2; }
+
+table.pricelist > tbody th { background-color: ; }
+table.pricelist > tbody td:first-child { text-align: left; }

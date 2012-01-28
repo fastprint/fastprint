@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+	<form enctype="multipart/form-data" method="post" action="" class="login r-sided">
+	    <p class="required"><label>E-mail</label><span>{{ login_form.username }}</span></p>
+	    <p class="required">
+	        <label></label><span><input type="radio" name="exists" onclick="$('#passwd').addClass('disabled').find(':input').attr('disabled', true); $(':submit').attr('value', 'Зарегистрироваться')" /> Я новый пользователь</span><br/>
+	        <label></label><span><input type="radio" name="exists" onclick="$('#passwd').removeClass('disabled').find(':input').attr('disabled', false); $(':submit').attr('value', 'Войти')" checked="true" /> Я уже зарегистрирован</span>
+	    </p>
+	    <p id="passwd" class="required"><label>Пароль</label><span><input type="password" name="password" autocomplete="off" /></span></p>
+		<p><label></label><input type="submit" /></p>
+    	{% if message %}
+    	    <p class="message"><label>Сообщение: </label>{{ message }}</p>
+    	{% endif %}
+    	{% if login_form.errors %}
+    	    <p class="message error">
+    	    {% for error in login_form.errors %}
+    	        <label>{{ error }}</label><span>{{ error.text }}</span><br/>
+    	    {% endfor %}
+    	    </p>
+    	{% endif %}
+	</form>
+	<div class="sidepanel abs-r socialpanel">
+		<h2>Войти с помощью:</h2>
+	</div>
+{% endblock %}

@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load flatblock_tags %}
+
+{% block page_title %}
+    {{ current_product|capfirst }} в типографии Фастпринт 
+{% endblock %}
+
+{% block ssn_sys %}
+    <!-- FBLike -->
+    <meta property="og:image" content="{% if current_product.img %}http://www.fastprint.me{{ current_product.img.url }}{% else %}/static/images/logo.svg{% endif %}"/>
+    <meta property="og:title" content="{{ current_product|capfirst }} в типографии Фастпринт"/>
+    <meta property="og:type" content="company"/>
+    <meta property="og:url" content="/products/{% if product.parent %}{{ product.parent.name }}/{% endif %}{{ product.name }}/"/>
+    <meta property="og:site_name" content="Типография Фастпринт"/>
+    <meta property="og:description" content="{{ current_product.desc|striptags }}"/>
+    <!-- FBLike -->    
+{% endblock %}
+
+{% block header %}
+
+    <header class="specified {{ current_product.name }} {{ current_event.name }}" {% if event.img %} style="background-image: url('{% thumbnail event.img "1050" as thumb %}{{ thumb.url }}{% endthumbnail %}');" {% endif %}>
+        {% if current_product.img %}
+            {% thumbnail current_product.img "x225" as thumb %}
+                <img id="preview" src="{{ thumb.url }}" />
+            {% endthumbnail %}
+        {% endif %}
+        <nav class="sidepanel">
+            <div class="opacube"></div>
+            <h2>{{ event }}</h2>
+            {% for product in event.products.all %}
+                <li><a href="/products/{% if product.parent %}{{ product.parent.name }}/{% endif %}{{ product.name }}/">{{ product|capfirst }}</a></li>
+            {% endfor %}
+            <span class="details"></span>
+        </nav>
+        <hgroup class="l-sided r-sided">
+            <h1>{{ current_product|capfirst }}</h1>
+            <ul class="thesis">
+                {% for thesis in current_product.thesis %}
+                    <li>{{ thesis.title }}</li>
+                {% endfor %}
+            </ul>
+        </hgroup>
+        {% if current_product.is_cc %}	
+            <aside id="order_summary" class="sidepanel abs-r">
+                <div class="opacube"></div>
+                <div id="price" class="summary"><big></big>&nbsp;<small>руб.</small></div>
+                <div><small>за <label id="circulation"></label> шт.</small></div>
+                <p>
+                    формата <label id="format"></label>мм на бумаге <label id="paper"></label>гр/м<sup>2</sup>
+                    с <label id="chromacity"></label> печатью за <label id="time"></label>
+                </p>
+                <div class="bottomed"><input type="submit" form="orderpanel" value="Оформить онлайн-заказ" /></div>
+            </aside>
+        {% endif %}
+        <div id="ssn" class="abs-r r-sided">
+            <div class="fb-like" data-href="http://fastprint.me" data-send="false" data-layout="button_count" data-width="10" data-show-faces="false" data-action="recommend" data-font="lucida grande"></div>
+        </div>
+    </header>
+
+{% endblock %}
+
+
+{% block leftnav %}
+
+    <nav class="sidepanel">
+        <h2>Вся продукция</h2>
+        {% for product in products %}
+                {% if not product.parent %}
+                    {# Вывод корневых продуктов #}
+                    <li>
+                        {% if product.id != current_product.id %}
+                            <a href="/products/{{ product.name }}/">{{ product.title|capfirst }}</a>
+                        {% else %}
+                            <strong>{{ product.title }}<div class="arrow-l abs-r"></div></strong>
+                        {% endif %}
+
+                        {# Выводим дочерние продукты #}
+                        {% for sub in products %}
+                            {% if sub.parent and sub.parent.id == product.id  %}
+                                <li>
+                                    {% if sub.id != current_product.id %}
+                                        <a href="/products/{{ sub.parent.name }}/{{ sub.name }}/">&rarr; {{ sub.title|capfirst }}</a>
+                                    {% else %}
+                                        <strong>&rarr; {{ sub.title|capfirst }}<div class="arrow-l abs-r"></div></strong>
+                                    {% endif %}
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </li>
+                {% endif %}
+        {% endfor %}
+    </nav>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <article class="l-sided r-sided tabed proptions">
+        <ul itemscope>
+            <li><a href="#opt-0">О продукте</a></li>
+            {# Меню корневых опций продукта #}
+            {% for option in current_options %}
+                {% if not option.parent and option.visible %}
+                    <li><a href="#opt-{{ option.name }}">{{ option.title|capfirst }}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <div id="opt-0" itemprop="summary" itemscope>
+            {{ current_product.desc|safe }}
+        </div>
+        {# Секции корневых опций продукта #}
+        {% for option in current_options %}
+            {% if not option.parent and option.visible %}
+                <div id="opt-{{ option.name }}" class="propt" itemprop="desc" itemscope>
+                    <div class="subtab sidepanel abs-l">
+                        <h5 itemprop="name">{{ option.title|capfirst }}</h5>
+                        <div id="propt-icon">
+                            {% if option.img.src %}
+                                {% thumbnail current_product.img "x150" as thumb %}
+                                    <img src="{{ option.img.src }}" itemprop="image" />
+                                {% endthumbnail %}
+                            {% endif %}
+                        </div>
+                        <ul>
+                            {% for sub in current_options %}
+                                {% if sub.parent and sub.parent.id == option.id and sub.visible %}
+                                    <li><a href="#sub-{{ sub.name }}" itemref="opt-{{ option.name }}">{{ sub.title }}</a><div class="abs-r">&rarr;</div></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="l-sided">
+                        <div>{{ option.desc|safe }}</div>
+                        {% for sub in current_options %}
+                            {% if sub.parent and sub.parent.id == option.id and sub.visible %}
+                                <div id="sub-{{ sub.name }}">{{ sub.desc|safe }}</a></li></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        {# Панель онлайн-заказа для сборных тиражей #}
+        <aside class="sidepanel abs-r">
+            <form id="orderpanel" method="POST" action="/online/order/" iscc="{{ current_product.is_cc|lower }}">
+                <input type="hidden" name="product" value="{{ current_product.name }}" />
+                {% if current_product.is_cc %}
+                    <h2><small>Параметры вашего заказа:</small></h2>
+                    <div>
+                        <label>Время</label>
+                        <span><input type="radio" name="time" value="48" checked="checked" /><label>48 ч.</label></span>
+                        <span><input type="radio" name="time" value="24" /><label>24 ч.</label></span>
+                        <span><input type="radio" name="time" value="4" /><label>4 ч.</label></span>
+                    </div>
+                    <div>
+                        <label>Тираж, шт.</label>
+                        <select name="circulation">
+                            <option selected="true">500</option>
+                            <option>1000</option>
+                            <option>2000</option>
+                            <option>3000</option>
+                            <option>4000</option>
+                            <option>5000</option>
+                            <option>6000</option>
+                            <option>8000</option>
+                            <option>10000</option>
+                        </select>
+                    </div>
+                    {% for option in current_options %}
+                        {% if not option.parent and option.is_cc %}
+                            {# Выводим только корневые опции с дочерними элементами #}
+                            <div>
+                                <label>{{ option.title|capfirst }}</label>
+                                <select name="{{ option.name }}">
+                                    {% for sub in current_options %}
+                                        {% if sub.parent.id == option.id %}
+                                            <option value="{{ sub.name }}">{{ sub.title }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div id="order_summary">
+                        <div id="price" class="summary"><big></big>&nbsp;<small>руб.</small></div>
+                        <div><input type="submit" value="Оформить онлайн-заказ" /></div>
+                    </aside>
+                {% else %}
+                {# Онлайн-заявка #}
+                    <h2><small>Онлайн-заявка на рассчет:</small></h2>
+                    <div>
+                        <label>Тираж, шт.</label>
+                        <select name="circulation">
+                            <option>1</option>
+                            <option>10</option>
+                            <option>50</option>
+                            <option>100</option>
+                            <option>150</option>
+                            <option>200</option>
+                            <option>250</option>
+                            <option>300</option>
+                            <option>350</option>
+                            <option>400</option>
+                            <option>450</option>
+                            <option selected="true">500</option>
+                            <option>600</option>
+                            <option>700</option>
+                            <option>800</option>
+                            <option>900</option>
+                            <option>1000</option>
+                            <option>1500</option>
+                            <option>2000</option>
+                            <option>2500</option>
+                            <option>3000</option>
+                            <option>3500</option>
+                            <option>4000</option>
+                            <option>4500</option>
+                            <option>5000</option>
+                            <option>6000</option>
+                            <option>7000</option>
+                            <option>8000</option>
+                            <option>9000</option>
+                            <option>10000</option>
+                        </select>
+                    </div>
+                    {# Выводим опции выше блока частей продукта #}
+                    {% for option in current_options %}
+                        {% if not option.parent and option.priority > 0 %}
+                            {# Выводим только корневые опции с дочерними элементами #}
+                            <div>
+                                <label>{{ option.title|capfirst }}</label>
+                                <select name="{{ option.name }}">
+                                    {% for sub in current_options %}
+                                        {% if sub.parent.id == option.id %}
+                                            <option value="{{ sub.name }}">{{ sub.title }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% for part in product_parts %}
+                        <div>
+                            <fieldset name="{{ part.name }}">
+                                <legend>{{ part }}</legend>
+                                {% for option in part.options.all %}
+                                    {% if not option.parent %}
+                                        <div>
+                                            <label>{{ option }}</label>
+                                            <select name="{{ option.name }}">
+                                                {% if option.name == 'pages' %}
+                                                    {% for i in 200|make_list %} {# |get_range:"4" #}
+                                                        <option>{{ i }}</option>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    {% for sub in part.options.all %}
+                                                        {% if sub.parent.id == option.id %}
+                                                            <option value="{{ sub.name }}">{{ sub.title }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </select>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </fieldset>
+                        </div>
+                    {% endfor %}
+                    
+                    {% for option in current_options %}
+                        {% if not option.parent and option.priority <= 0 %}
+                            {# Выводим только корневые опции с дочерними элементами #}
+                            <div>
+                                <label>{{ option.title|capfirst }}</label>
+                                <select name="{{ option.name }}">
+                                    {% for sub in current_options %}
+                                        {% if sub.parent.id == option.id %}
+                                            <option value="{{ sub.name }}">{{ sub.title }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </form>
+        </aside>
+    </article>
+    
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% block page_title %}
+    Типография Фастпринт | {{ page.title|capfirst }} 
+{% endblock %}
+
+{% block header %}
+
+    <header class="specified {{ page.name }}" {% if event.img %} style="background-image: url('{% thumbnail event.img "1050" as thumb %}{{ thumb.url }}{% endthumbnail %}');" {% endif %}>
+        <menu class="sidepanel">
+            <div class="opacube"></div>
+            {% for product in event.products.all %}
+                <li><a href="javascript:void(0)">{{ product }}</a></li>
+            {% endfor %}
+            <span class="details"></span>
+        </menu>
+        <hgroup class="l-sided r-sided">
+            <div id="preview">
+                {% if current_product.img %}
+                    <img src="{{ page.img.url }}" />
+                {% endif %}
+            </div>
+            <h1>{{ page.title }}</h1>
+        </hgroup>	
+    </header>
+
+{% endblock %}
+
+
+{% block leftnav %}
+
+    <nav class="sidepanel">
+        <h2>Вся продукция</h2>
+        {% for product in products %}
+                {% if not product.parent %}
+                    {# Вывод корневых продуктов #}
+                    <li>
+                        {% if product.id != current_product.id %}
+                            <a href="/products/{{ product.name }}/">{{ product.title|capfirst }}</a>
+                        {% else %}
+                            <strong>{{ product.title }}<div class="arrow-l abs-r"></div></strong>
+                        {% endif %}
+
+                        {# Выводим дочерние продукты #}
+                        {% for sub in products %}
+                            {% if sub.parent and sub.parent.id == product.id  %}
+                                <li><a href="/products/{{ sub.parent.name }}/{{ sub.name }}/">&rarr; {{ sub.title|capfirst }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </li>
+                {% endif %}
+        {% endfor %}
+    </nav>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <article class="l-sided proptions">
+        <ul itemscope>
+        </ul>
+        <div id="opt-0" itemprop="summary" itemscope>
+            {{ page.desc|safe }}
+        </div>
+    </article>
+    
+{% endblock %}

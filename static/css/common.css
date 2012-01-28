@@ -1,0 +1,215 @@
+body {
+	background: white url('/static/images/bgPaper.jpg') repeat left top;
+}
+
+body > * {
+	position: relative;
+	color: #333;
+}
+
+body > section > header.product {
+	min-height: 200px;
+	max-height: 250px;
+}
+
+nav, menu {
+	display: block;
+	position: relative;
+	margin: 0; padding: 0;
+	list-style-type: none;
+}
+
+nav > li, menu > li {
+	position: relative;
+}
+
+nav li > a, nav li > strong {
+	display: block;
+	height: 100%;
+}
+
+h2, section > section > h1 {
+	margin: 0;
+	min-height: 19px; 
+	margin-bottom: 10px;
+	padding: 8px 5px 5px 10px;
+	background-color: #666;
+	font: bold 1.3em/1.1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: white;
+}
+
+h2 > img {
+	position: absolute;
+	left: 5px; top: -5px;
+}
+
+article > table {
+	margin: 5%;
+	width: 90%;
+	background-color: silver;
+}
+
+article > table th {
+	padding: 5px;
+}
+
+article > table td {
+	padding: 5px;
+	background-color: white;
+	text-align: center;
+}
+
+article > table > tbody > tr:nth-child(even) > td { background-color: #EEE }
+article > table > tbody > tr > td:nth-child(2) { text-align: left; }
+
+
+/* Скругление углов центрального блока и его наследников */
+body > section { border-radius: 7px; }
+body > section > header, body > section > header #preview { border-radius: 7px 7px 0 0; }
+body > section > header #order_params, body > section > header #order_summary > .opacube { border-radius: 0 7px 0 0; }
+body > section > header h2, body > section > section:first-child > nav > h2:first-child, body > section > header > nav > .opacube { border-radius: 7px 0 0 0; } /* body > section > header > nav > h2 */
+body > section > section > nav, body > section > section > menu { border-radius: 0 0 0 7px; }
+body > section > section { border-radius: 0 0 7px 7px; }
+
+/* Скрытые элементы */
+.hidden { display: none; }
+
+/* Прозрачная подложка */
+.opacube {
+	z-index: 0;
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	background-color: black;
+	opacity: 0.2;
+}
+
+.opacube ~ * {
+	position: relative;
+}
+
+.abs-l, .abs-r {
+	display: block;
+	position: absolute;
+}
+.abs-l { left: 0; }
+.abs-r { right: 0; }
+
+/* Стрелки */
+.arrow-l {
+	width: 0; height: 0;
+	border-top: 13px solid transparent;
+	border-bottom: 13px solid transparent; 
+	border-right: 13px solid white;
+}
+
+.arrow-r {
+	width: 0; height: 0;
+	border-top: 13px solid transparent;
+	border-bottom: 13px solid transparent; 
+	border-left: 13px solid white;
+}
+
+/* Прижатый к низу */
+.bottomed {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    text-align: center;
+}
+
+/* Выделенный фрагмент */
+.note {
+    background-color: #ffe987;
+}
+
+.details {
+	position: absolute;
+	left: 0; right: 0; bottom: 0;
+	padding: 1em;
+	text-align: center;
+}
+
+/* Скрываем по-умолчанию все панели jquery ui tabs */
+.ui-tabs-panel {
+    display: none;
+}
+
+/* Общее описание форм */
+body > section form {
+}
+
+body > section form > section {
+	margin: 2%;
+	font: normal 1.2em 'Helvetica Neue', Arial, sans-serif;
+}
+
+body > section form div {
+	margin: 10px 0
+}
+
+body > section form p {
+    position: relative;
+	margin: 0;
+	padding: 5px 10px;
+	font: normal 1.1em 'Helvetica Neue', Arial, sans-serif;
+}
+
+    body > section form p:nth-child(even) {
+    	background-color: #EEE
+    }
+    
+    body > section form p:empty {
+        display: none;
+    }
+
+body > section form p > label {
+	display: inline-block;
+	padding-right: 5px;
+	width: 45%;
+	text-align: right;
+}
+
+body > section form p > label + span {
+    display: inline-block;
+}
+
+body > section form p input[type='radio']:checked ~ span {
+    font-weight: bold;
+}
+
+body > section form .required { 
+	background: transparent url('/media/images/silverstar16.png') no-repeat 8px center;
+}
+
+    body > section form .required[focus] {
+    	background: transparent url('/media/images/blackstar16.png') no-repeat 8px center;
+    }
+
+body > section form .required label > sup {
+    color: red;
+}
+
+body > section form .disabled > label {
+    color: silver;
+}
+
+body > section form span.icon {
+    display: block;
+    float: right;
+    width: 16px; height: 16px;
+    background-repeat: no-repeat;
+}
+
+body > section form span.valid { background-image: url('/media/images/valid.png'); }
+body > section form span.invalid { background-image: url('/media/images/invalid.png'); }
+
+/* Блок pricelist */
+.pricelist {
+    display: none;
+}
+
+/* Бок социальных кнопок */
+#ssn {
+    position: absolute;
+    min-width: 30px; min-height: 30px;
+}

@@ -1,0 +1,89 @@
+/* Настройка панели онлайн-заказа */
+
+#orderpanel {
+	background-color: #d2f9cc;
+}
+
+#orderpanel > h2 {
+	margin: 0;
+}
+
+#orderpanel > div {
+    position: relative;
+	margin: 0;
+	padding: 8px 10px;
+	text-align: center;
+}
+
+	#orderpanel > div:nth-child(even) { background-color: #e9fce0; }
+	
+#orderpanel > div > label {
+	display: block;
+	text-align: left;
+}
+
+#orderpanel > div > select, #orderpanel > div > input, #orderpanel > div > textarea {
+	width: 100%;
+}
+
+#orderpanel > div > p {
+    background: transparent;
+	font: italic 1em/1.1em Arial, Helvetica, Geneva, sans-serif;
+	text-align: left;
+}
+
+#orderpanel > div > p > small, #orderpanel > div > p > big {
+	font: bold 1.2em/1.2em 'Arial Black', Arial, Helvetica, Geneva, sans-serif;
+	letter-spacing: -0.1em
+}
+
+#orderpanel > div > p > big {
+	font-size: 2em;
+}
+
+#orderpanel > div > p > label {
+    display: inline;
+}
+
+    #orderpanel > div > p > label[id] { font-weight: bold; }
+
+#orderpanel > #order_summary {
+    margin: 10px 0;
+}
+
+#orderpanel > #order_summary > div {
+    margin: 0; padding: 0;
+	background-color: #d2f9cc;
+	font: normal 2em/1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	text-align: center;
+	color: black;
+}
+
+#orderpanel > #order_summary > div > big {
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+#orderpanel > div > span {
+	margin-right: 10px;
+}
+
+#orderpanel > div > span > label {
+	margin-left: 2px;
+}
+
+#orderpanel > div > span > input:checked ~ label {
+	font-weight: bold;
+}
+
+#orderpanel .auto {
+    display: block;
+    position: absolute;
+    top: -6px; right: 12px;
+    width: 16px; height: 16px;
+    background: transparent url('/static/images/alert16.png') no-repeat;
+}
+
+#orderpanel .auto > div {
+    display: none;
+}	

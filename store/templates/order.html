@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ current_product.title|capfirst }} в типографии Фастпринт 
+{% endblock %}
+
+{% block header %}
+
+    <header class="specified product">
+        <h1>Онлайн-заказ полиграфии</h1>
+    </header>
+
+{% endblock %}
+
+
+{% block leftnav %}
+
+    <nav class="sidepanel">
+        <h2>Вся продукция</h2>
+        {% for product in products %}
+                {% if not product.parent %}
+                    {# Вывод корневых продуктов #}
+                    <li>
+                        {% if product.id != current_product.id %}
+                            <a href="/products/{{ product.name }}/">{{ product.title|capfirst }}</a>
+                        {% else %}
+                            <strong>{{ product.title }}<div class="arrow-l abs-r"></div></strong>
+                        {% endif %}
+
+                        {# Выводим дочерние продукты #}
+                        {% for sub in products %}
+                            {% if sub.parent and sub.parent.id == product.id  %}
+                                <li><a href="/products/{{ sub.parent.name }}/{{ sub.name }}/">&rarr; {{ sub.title|capfirst }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </li>
+                {% endif %}
+        {% endfor %}
+    </nav>
+
+{% endblock %}
+
+
+{% block content %}
+
+    <form enctype="multipart/form-data" method="post" action="">
+        <input type="submit" value="Send">
+        {{ order.non_field_errors }}
+        {{ order.as_p }}
+    </form>
+
+    
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ current_product.title|capfirst }} в типографии Фастпринт 
+{% endblock %}
+
+
+{% block leftnav %}
+
+{% endblock %}
+
+
+{% block content %}
+
+	<article class="l-sided r-sided proptions">
+		<ul itemscope>
+			<li><a href="#opt-0">О продукте</a></li>
+			{# Меню корневых опций продукта #}
+			{% for option in current_options %}
+				{% if not option.parent %}
+					<li><a href="#opt-{{ option.name }}">{{ option.title|capfirst }}</a></li>
+				{% endif %}
+			{% endfor %}
+		</ul>
+		<div id="opt-0" itemprop="summary" itemscope>
+			{{ current_product.desc }}
+		</div>
+		{# Меню корневых опций продукта #}
+		{% for option in current_options %}
+			{% if not option.parent %}
+				<div id="opt-{{ option.name }}" itemprop="desc" itemscope>
+					<div class="sidepanel abs-l">
+						<h5 itemprop="name">{{ option.title|capfirst }}</h5>
+						{% if option.img.src %}
+							<img src="{{ option.img.src }}" itemprop="image" />
+						{% endif %}
+						<ul>
+							{% for sub in current_options %}
+								{% if sub.parent and sub.parent.id == option.id %}
+									<li><a href="#sub-{{ sub.name }}" itemref="opt-{{ option.name }}">{{ sub.title }}</a></li>
+								{% endif %}
+							{% endfor %}
+						</ul>
+					</div>
+					<div class="l-sided">
+						<div>{{ option.desc }}</div>
+						{% for sub in current_options %}
+							{% if sub.parent and sub.parent.id == option.id %}
+								<div id="sub-{{ sub.name }}">{{ sub.desc }}</a></li></div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			{% endif %}
+		{% endfor %}
+
+		{% if aside %}
+			<nav class="sidepanel">
+				<h2>{ aside.title }</h2>
+				{% for item in aside.items %}
+					<div>
+						<label>{{ item.title }}</label>
+						<p>{{ item.text }}</p>
+					</div>
+				{% endfor %}
+			</nav>
+		{% elseif %}
+
+	</article>
+	
+{% endblock %}

@@ -1,0 +1,13 @@
+ipython
+django-annoying
+sorl-thumbnail
+django-mptt
+django-tinymce
+PIL
+redis
+django-redis-cache
+BeautifulSoup
+South
+django-flatblocks
+yandex-maps
+premailer

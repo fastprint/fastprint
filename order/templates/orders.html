@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+
+{% block leftnav %}
+
+    <nav class="sidepanel">
+    	<h2>Личный кабинет</h2>
+    	<li><a href="/profile/">Настройки профиля</a></li>
+    	<li><strong>Мои заказы</strong><div class="arrow-l abs-r"></div></li>
+    </nav>
+
+{% endblock %}
+
+{% block content %}
+
+    <article class="l-sided tabed">
+        <ul itemscope>
+    		<li><a href="#current">Текущие заказы</a></li>
+    		<li><a href="#history">История заказов</a></li>
+    	</ul>
+
+        <table id="current" cellspacing="1">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Опции</th>
+                    <th>Время</th>
+                    <th>Стоимость</th>
+                    <th>Статус заказа</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    {% if order.status < 100 %}
+                    	<tr>
+                			<td>{{ order.id }}</td>
+                			<td>{{ order.product }}, {{ order.format }}, {{ order.paper }}, {{ order.chromacity }}</td>
+                			<td>{{ order.time }}</td>
+                			<td>{{ order.cost }}</td>
+                			<td>
+                                {% if order.order_status == -1 %}<span class="error">отклонен</span>{% endif %}
+                                {% if order.order_status == 0 %}<span>открыт</span>{% endif %}
+                                {% if order.order_status == 1 %}<span>оформлен</span>{% endif %}
+                                {% if order.order_status == 2 %}<span>подтвержден</span>{% endif %}
+                                {% if order.order_status == 3 %}<span>проверен</span>{% endif %}
+                                {% if order.order_status == 4 %}<span>печатается</span>{% endif %}
+                                {% if order.order_status == 5 %}<span>постпечать</span>{% endif %}
+                                {% if order.order_status == 6 %}<span>в доставке</span>{% endif %}
+                            </td>
+                    	</tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table id="history" cellspacing="1">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Опции</th>
+                    <th>Время</th>
+                    <th>Стоимость</th>
+                    <th>Статус заказа</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                    {% if order.status == -1 or order.status == 100  %}
+                        <tr>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.product }}, {{ order.format }}, {{ order.paper }}, {{ order.chromacity }}</td>
+                            <td>{{ order.time }}</td>
+                            <td>{{ order.cost }}</td>
+                            <td>
+                                {% if order.order_status == -1 %}<span class="error">отклонен</span>{% endif %}
+                                {% if order.order_status == 100 %}<span>завершен</span>{% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </article>
+{% endblock %}

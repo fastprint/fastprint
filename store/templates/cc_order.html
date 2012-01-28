@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+	{{ page.title }} в сборные тиражи:
+	{% for product in products %}
+		{% if product.is_cc %}
+			{{ product.title|lower }}{% if product.parent %} {{ product.parent|lower }}{% endif %}{% if not forloop.last %}, {% endif %}
+		{% endif %}
+	{% endfor %}
+	в типографии Фастпринт 
+{% endblock %}
+
+{% block header %}
+
+	<header class="specified flatpage">
+		<nav class="sidepanel">
+			<div class="opacube"></div>
+			<h2>{{ page.title }}</h2>
+			{% for item in menu %}
+					{% if item.parent and item.parent and item.parent.id == page.id %}
+						<li>
+							{% if item.id != page.id %}
+								<a href="/{{ page.name }}/{{ item.name }}/">{{ item.title|capfirst }}</a>
+							{% else %}
+								<strong>{{ item.title }}</strong>
+							{% endif %}
+						</li>
+					{% endif %}
+			{% endfor %}
+		</nav>
+		<figure class="l-sided r-sided">
+			<h1>{{ page.title }}</h1>
+			<article>{{ page.desc }}</article>
+		</figure>	
+	</header>
+
+{% endblock %}
+
+
+{% block content %}
+
+	<article class="l-sided r-sided flatcontent">
+		
+	</article>
+	
+{% endblock %}

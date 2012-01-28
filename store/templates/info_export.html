@@ -1,0 +1,43 @@
+{# Экспорт plain-text данных для fastprint.info #}
+
+<h1>{{ product }}</h1>
+{% if product.img %}
+    <div class="imgme">
+        <img src="http://fastprint.me{{ product.img.url }}" />
+    </div>
+{% endif %}
+</div>
+<div class="desc">{{ product.desc }}</div>
+{% if product.options.all %}
+    <div class="options">
+        <h2>Для данного продукта доступны следующие опции:</h2>
+        {% for root in product.options.all %}
+            {% if not root.parent and root.visible %}
+                <ul>
+                    <h3>{{ root.title }}</h3>
+                    <div>{{ root.desc }}</div>
+                    {% for sub in product.options.all %}
+                        {% if sub.parent and sub.parent.id == root.id and sub.visible %}
+                            <li><strong>{{ sub.title }}</strong> — {{ sub.desc|safe }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
+{% if product.is_cc %}
+    <a href="/zakaz-poligrafii/" class="cc_link">
+        Заказать {{ product.title|lower }} онлайн
+    </a>
+{% else %}
+    <div id="callnow">
+        <h4>Остались вопросы?</h4>
+        <p>
+            Позвоните нашим менеджерам прямо сейчас и они смогут сделать вам предложение, от которого вы не сможете отказаться:<br/>
+            <big>(812) 335 57 57</big><br/>
+            <small>с 9<sup>00</sup> до 18<sup>00</sup> в любой будний день</small>
+        </p>
+        
+    </div>
+{% endif %}

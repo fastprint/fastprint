@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block page_title %}Типография Фастпринт | {{ page.title }}{% endblock %}
+
+{% block header %}
+	<header class="specified index">
+	</header>
+{% endblock %}
+
+{% block leftnav %}
+	<nav class="sidepanel">
+		<h2>Вся продукция</h2>
+		{% for product in products %}
+				{% if not product.parent %}
+					{# Вывод корневых продуктов #}
+					<li>
+						{% if product.id != current_product.id %}
+							<a href="/products/{{ product.name }}/">{{ product.title|capfirst }}</a>
+						{% else %}
+							<strong>{{ product.title }}<div class="arrow-l abs-r"></div></strong>
+						{% endif %}
+
+						{# Выводим дочерние продукты #}
+						{% for sub in products %}
+							{% if sub.parent and sub.parent.id == product.id  %}
+								<li><a href="/products/{{ sub.parent.name }}/{{ sub.name }}/">&rarr; {{ sub.title|capfirst }}</a></li>
+							{% endif %}
+						{% endfor %}
+					</li>
+				{% endif %}
+		{% endfor %}
+	</nav>
+
+{% endblock %}
+
+
+{% block content %}
+	<article class="l-sided r-sided tabed">
+		
+		{% if page.page.all %}
+    		<ul itemscope>
+    		    {% for tab in page.page.all %}
+    		        {% if tab.visible %}
+    			        <li><a href="#{{ tab.name }}">{{ tab.title }}</a></li>
+    			    {% endif %}
+    			{% endfor %}
+    		</ul>
+		    {% for tab in page.page.all %}
+		        {% if tab.visible %}
+		            <div id="{{ tab.name }}">{{ tab.desc|safe }}</div>
+			    {% endif %}
+			{% endfor %}
+        {% else %}
+            <ul itemscope></ul>
+            <div>{{ page.desc|safe }}</div>
+		{% endif %}
+
+		<aside class="abs-r sidepanel news">
+			<div id="orderpanel">
+				<h2>Последние новости</h2>
+				<div>
+					<label></label>
+					<p></p>
+				</div>
+			</div>
+		</aside>
+
+	</article>
+{% endblock %}

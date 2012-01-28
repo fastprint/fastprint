@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>{% block page_title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/960.css" type="text/css" media="screen">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/jquery-ui-git.js"></script>
+    <script type="text/javascript" src="/static/js/forma.jquery.js"></script>
+    <script type="text/javascript" src="/static/js/common.js"></script>
+    {% if current_product %}
+        <script type="text/javascript" src="/static/js/fastorder.jquery.js"></script>
+        <link rel="stylesheet" href="/static/css/orderpanel.css" type="text/css" media="screen">
+    {% endif %}
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/static/js/html5.js"></script>
+        <link rel="stylesheet" href="/static/css/ie.css" type="text/css" media="screen">
+    <![endif]-->
+    {% if event.css %}
+        <style>
+            {{ event.css|safe }}
+        </style>
+    {% endif %}
+    {% block ssn_sys %}{% endblock %}
+</head>
+
+<body>
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=147315818700339";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+    
+    <header>
+        <div class="central">
+            <div>
+                <a id="fplogo" href="/" alt="Типография Фастпринт" title="Типография Фастпринт" class="sidepanel">
+                    <!--[if IE]<embed src="/static/images/logoInvert.svg" width="110px" height="110px">[endif]-->
+                    <img src="/static/images/logo.svg" width="110px" height="110px" />
+                    <label>Типография Фастпринт</label>
+                </a>
+            </div>
+            <div id="userdata" class="sidepanel abs-r">
+                <a href="/{% if profile.user.id %}profile{% else %}login{% endif %}/" id="profile" class="rowchild hl-item">
+                    {% if profile %}
+                        <img src="{% if profile.img %}/media/{{ profile.img }}{% else %}/media/images/profile.png{% endif %}" class="abs-l profile" />
+                        <big>
+                            {% if profile.user.first_name and profile.user.last_name %}
+                                {{ profile }}
+                            {% else %}
+                                Активируйте учетную запись!
+                            {% endif %}
+                        </big>
+                        <small>Вход в личный кабинет</small>
+                    {% else %}
+                        <img src="/static/images/keychain.png" class="abs-l" />
+                        <big>Вход в систему</big>
+                        <small>Для оформления онлайн-заказа</small>
+                    {% endif %}
+                </a>
+                <a id="f1" href="/f1/" class="rowchild">
+                    <img src="/static/images/f1_key.png" class="abs-l" />
+                    <big>Помощь по сайту</big>
+                    <small>Руководство пользователя</small>
+                </a>
+            </div>
+        </div>
+        <nav>
+            <ul class="central">
+                <li class="sidepanel"><a href="/products/">Продукция</a></li>
+                {% for item in menu %}
+                    {% if not item.parent %}
+                        <li class="sidepanel"><a href="/{{ item.name }}/">{{ item.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="sidepanel abs-r"></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div id="magicfeed" class="central" itemscope>
+        <ul id="shortnews" class="abs-l">
+        </ul>
+        <ul id="socials" class="sidepanel" itemscope>
+            <li itemprop="link"><a href="javascript:void(0)" rel="nofollow"></a></li>
+            <li itemprop="link"><a href="javascript:void(0)" rel="nofollow"></a></li>
+        </ul>
+    </div>
+    
+    <section class="central">
+        {% block header %}{% endblock %}
+        <section>
+            {% block leftnav %}{% endblock %}
+            {% block content %}{% endblock %}
+        </section>
+    </section>
+        
+    <footer>
+        <div class="central">
+            <nav class="sidepanel">&nbsp;</nav>
+            {% for item in menu %}
+                {% if not item.parent %}
+                {# Перебираем корневые элементы для доступа к дочерним элементам #}
+                    <nav class="sidepanel">
+                        <h3>{{ item.title|capfirst }}</h3>
+                        {% for sub in menu %}
+                            {% if sub.parent and sub.parent.id == item.id %}
+                                <li><a href="/{{ item.name }}/{{ sub.name }}/">{{ sub.title|capfirst }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    </nav>
+                {% endif %}
+            {% endfor %}
+            <div style="clear: both;"></div>
+            <div id="ssnbox" class="abs-r sidepanel"></div>
+        </div>
+    </footer>
+    
+</body>
+</html>

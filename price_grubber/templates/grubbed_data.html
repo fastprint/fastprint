@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Grubber 0.2</title>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<style type="text/css">
+    #progstat {
+        display: none;
+        position: fixed;
+        left: 0; right: 0;
+        top: 0; bottom: 0;
+        background-color: silver;
+        border: 10px solid white;
+        color: #666;
+        opacity: 0.95;
+    }
+    table.imagetable {
+        font-family: verdana,arial,sans-serif;
+        font-size:11px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #999999;
+        border-collapse: collapse;
+    }
+    table.imagetable th {
+        background:#b5cfd2;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #999999;
+    }
+    table.imagetable td {
+        background:#dcddc0;
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-color: #999999;
+    }
+    .red {
+        color: red;
+    }
+    .green {
+        color: green;
+    }
+    .black {
+        color: #000000;
+    }
+</style>
+
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+        $(':submit').click(function(){
+            console.log('Start updating...');
+            $.ajax({
+                url: '/update_' + $(this).attr('name') + '/',
+                data: '',
+                beforeSend: function() { $('#progstat').html('Обновление данных...').fadeIn(); },
+                success: function(response) { 
+                    response.complete = parseInt(response.complete);
+                    if(response.complete) {
+                        $('#progstat').html('Данные успешно обновлены (' + response.complete + ' returns)').delay(2000).fadeOut();
+                        console.log('...ok');
+                    }
+                    else {
+                        $('#progstat').html('Ошибка обновления (' + response.complete + ' returns). Обратитесь к леммингам!').append($('<input value="Закрыть" />').click(function(){ $('#progstat').fadeOut(); }));
+                        console.log('...fail');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+</head>
+<body>
+
+<div id="progstat"></div>
+
+<p>Получить данные: 
+<table>
+    <tr>
+        <td><input type='submit' name='fastprint' value='ФастПринт'></td>
+        <td><input type='submit' name='mgroup' value='Группа М'></td>
+        <td><input type='submit' name='colorit' value='Колорит'></td>
+        <td><input type='submit' name='tetra' value='Тетра'></td>
+    </tr>
+</table>
+</p>
+
+<div id="progresser"></div>
+
+{% for products in circulations %}
+    <table class="imagetable">
+        <tr>
+            <td>Наименование</td>
+            <td>Цветность</td>
+            <td>Стоимость</td>
+            <td><b>&delta;GruppaM</b></td>
+            <td><b>&delta;Kolorit</b></td>
+            <td><b>&delta;Tetra</b></td>
+            <td>Количество</td>
+        </tr>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.format }}</td>
+            <td>{{ product.chromaticity }}</td>
+            <td>{{ product.cost }}</td>
+
+            {% if product.delta_gruppaM > 0 %}
+                <td class="red">{{ product.delta_gruppaM }}&darr;</td>
+            {% endif %}
+
+            {% if product.delta_gruppaM <= 0 %}
+                <td class="green">{{ product.delta_gruppaM }}&uarr;</td>
+            {% endif %}
+
+            {% if product.delta_kolorit > 0 %}
+                <td class="red">{{ product.delta_kolorit }}&darr;</td>
+            {% endif %}
+
+            {% if product.delta_kolorit <= 0 %}
+                <td class="green">{{ product.delta_kolorit }}&uarr;</td>
+            {% endif %}
+
+            {% if product.delta_tetra > 0 %}
+                <td class="red">{{ product.delta_tetra }}&darr;</td>
+            {% endif %}
+
+            {% if product.delta_tetra <= 0 %}
+                <td class="green">{{ product.delta_tetra }}&uarr;</td>
+            {% endif %}
+
+            <td><b>{{ product.circulation }}</b></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <br /><br />
+{% endfor %}
+
+</body>
+</html>

@@ -1,0 +1,471 @@
+@import url('common.css');
+@import url(http://fonts.googleapis.com/css?family=Istok+Web:700italic,400,700,400italic|Lobster|Play:400,700);
+
+body {
+	width: 100%; height: 100%;
+	min-width: 960px;
+}
+
+body {
+	position: relative;
+	margin: 0; padding: 0;
+	background-color: gray;
+	font-size: 67.5%;
+	font-family: "Helvetica", sans-serif;
+}
+
+
+/* Центрирующийся блок */
+.central {
+	position: relative;
+	width: 90%;
+	min-width: 960px;
+	max-width: 1050px;
+	margin: auto; padding: 0;
+	clear: both;
+}
+
+
+/* Блоки, имеющие боковые панели слева (и)или справа */
+.l-sided { margin-left: 195px; }
+.r-sided { margin-right: 195px; }
+
+/* Общий класс для боковых панелей */
+.sidepanel { top: 0; width: 195px; }
+
+li.sidepanel {
+	width: 195px;
+	margin: 0; padding: 0;
+	display: inline-block;
+	text-align: center;
+}
+
+
+/* Шапка страницы */
+body > header {
+	height: 150px;
+	background-color: #222;
+}
+
+body > header > div {
+	height: 100%;
+}
+
+
+/* Логотип в шапке */
+body > header a#fplogo {
+	display: block;
+	padding-top: 7px;
+	font: bold 4em "Lobster", Arial Black, Arial, Geneva, sans-serif;
+	text-transform: lowercase;
+	text-decoration: none;
+	text-align: center;
+}
+
+body > header a#fplogo label {
+	display: none;
+}
+
+
+/* Верхнее меню навигации */
+body > header nav {
+	display: block;
+	position: absolute;
+	left: 0; right: 0; bottom: 0;
+	height: 28px;
+	background-color: #ffdc40;
+	border-top: 1px solid #ffe987;
+	border-bottom: 1px solid #f3c701;
+}
+
+body > header > nav > ul {
+    position: relative;
+	padding: 10px 0;
+}
+
+body > header > nav > ul > li {
+    position: relative;
+	height: 28px;
+	font: normal 1.8em 'Helvetica Neue', Tahoma, sans-serif;
+}
+
+body > header > nav > ul > li > a {
+    position: absolute;
+    top: -1px; bottom: -1px;
+    left: 0; right: 0;
+    height: auto;
+	padding-top: 2px;
+	text-decoration: none;
+	color: black;
+}
+	body > header > nav > ul > li > a:hover {
+        color: white;
+	    background-color: #333; 
+	    border-top: 1px solid #444; 
+	    border-bottom: 1px solid black; 
+	}
+
+body > header > nav > ul > li.sidepanel {
+	text-align: center;
+}
+
+
+/* Пользовательский блок */
+body > header #userdata {
+	z-index: 2;
+	top: 0; bottom: 0;
+	margin-bottom: 30px;
+	background-color: #292929;
+	border-left: 1px solid #333;
+	overflow: hidden;
+}
+
+body > header #userdata > .rowchild {
+    display: block;
+    position: absolute;
+    left: 10px; right: 10px;
+    height: 50%;
+    background-repeat: no-repeat;
+    text-decoration: none;
+    opacity: 0.7;
+}
+
+    body > header #userdata > .rowchild:first-child { top: 10px; border-bottom: 1px solid #333; }
+    body > header #userdata > .rowchild:last-child { bottom: 0; }
+
+body > header #userdata > .rowchild:hover { opacity: 1; }
+
+body > header #userdata > .rowchild big, body > header #userdata > .rowchild small {
+    display: block;
+}
+
+body > header #userdata > .rowchild big, body > header #userdata > .rowchild big > a {
+    padding-top: 2px;
+    font: bold 1em/1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    color: white;
+}
+
+body > header #userdata > .rowchild small, body > header #userdata > .rowchild small > a {
+    padding-top: 5px;
+    font: normal 0.9em/1.1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    color: silver;
+}
+
+    body > header #userdata > .rowchild a:hover { text-decoration: underline; color: white; }
+    
+body > header #userdata > .rowchild#profile {
+    font-size: 1.1em;
+    padding-left: 55px;
+}
+
+body > header #userdata > .rowchild#f1 {
+    height: 40px;
+    padding-left: 40px;
+}
+
+
+/* Полоса новостей и социальных плагинов */
+body > #magicfeed {
+	overflow: hidden;
+	height: 30px;
+}
+
+body > #magicfeed ul {
+	list-style-type: none;
+}
+
+
+/* Центральный блок */
+body > section {
+	padding: 0;
+	background-color: white;
+	box-shadow: 0 0 8px rgba(0,0,0,0.2);
+	overflow: hidden;
+}
+
+
+/* Общие стили для боковых менюшек */
+body > section nav {
+	background: transparent;
+}
+
+body > section nav > li {
+	background: transparent;
+	font: normal 1.2em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+body > section nav a {
+	padding: 3px 10px;
+	color: #444;
+	text-decoration: none;
+}
+
+	body > section nav a:hover {
+		background-color: white;
+	}
+	
+body > section nav > li > strong {
+	margin: 3px 0;
+	padding: 3px 10px;
+	font-size: 1.1em;
+	background-color: #ffe987;
+}
+
+
+/* Шапка центрального блока (продуктовая шапка) */
+body > section > header {
+	position: relative;
+	margin: 0; padding: 0;
+	min-height: 200px;
+	overflow: hidden;
+	background-position: center center;
+}
+
+/* Меню праздничных продуктов */
+body > section > header > nav {
+    z-index: 2;
+	position: absolute;
+	top: 0; bottom: 0; left: 0;
+	background-color: transparent;
+}
+
+body > section > header > nav a {
+	font-size: 0.9em;
+}
+
+body > section > header > hgroup {
+    z-index: 1;
+	position: relative;
+	margin: 0; padding: 0;
+}
+
+body > section > header > hgroup > h1 {
+	position: relative;
+	margin: 2%; margin-right: 5%;
+	font: bold 4em/0.9em "Lobster", Arial, Helvetica, Geneva, sans-serif;
+	text-align: right;
+}
+
+body > section > header #order_summary {
+    top: 0; bottom: 0;
+    padding-top: 7px;
+    border-left: 1px solid white;
+}
+
+body > section > header #order_summary > .opacube {
+    background-color: white;
+    opacity: 0.6;
+}
+
+body > section > header #order_summary > p {
+    display: none;
+    color: #666;
+    margin: 10px;
+    padding: 5px 2px;
+    font-size: big;
+    border: 1px dotted #CCC;
+    border-width: 1px 0;
+}
+
+body > section > header #order_summary > p > label[id] {
+    font-weight: bold;
+}
+
+    body > section > header #order_summary > p > label[id]:hover { background-color: #ffe987; }
+
+body > section > header #order_summary > div {
+    padding-top: 5px;
+    text-align: center;
+}
+
+body > section > header #order_summary > .bottomed {
+    bottom: 10px;
+}
+
+body > section > header #order_summary > div big {
+    font: bold 3em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+body > section > header #order_summary > div small {
+    font: normal 2em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+body > section > header #order_summary > div#price + div {
+    margin-top: -1.6em;
+    font-size: 0.8em;
+}
+
+body > section > header #ssn {
+    bottom: 1%;
+}
+
+
+/* Фоновая картинка продукта */
+body > section > header #preview {
+    z-index: 0;
+    display: block;
+	position: absolute;
+	margin: 0; padding: 0;	
+}
+
+
+/* Содержание центрального блока (описание продукта) */
+body > section > section {
+	clear: both;
+	position: relative;
+	min-height: 400px;
+	padding-bottom: 40px;
+/*	background: #fcf8d4 url('../images/bgContent.png') repeat-y right top;*/
+	overflow: hidden;
+	box-shadow: -2px 0 5px rgba(0,0,0,0.4); 
+}
+
+
+/* Меню «Все продукты» */
+body > section > section > nav {
+	float: left;
+	padding-bottom: 10000px;
+	margin-bottom: -10000px;
+	background-color: #f3edd4;
+}
+
+body > section > section > nav .arrow-l {
+	top: -2px;
+}
+
+body > section > section > article {
+	padding: 0; margin: 0;
+}
+
+body > section > section .tabed > ul {
+	position: relative;
+	margin: 0; padding: 0 10px;
+	height: 31px;
+	background-color: #F1F1F1;
+	background: -o-linear-gradient(90deg, #cccccc 0%, #f1f1f1 100%), #DDD;
+	background: -moz-linear-gradient(90deg, #cccccc 0%, #f1f1f1 100%), #DDD;
+	background: -webkit-gradient(linear, left top, left bottom, from(#f1f1f1), to(#cccccc)), #DDD;
+	border-top: 1px solid #EEE;
+	overflow: hidden;
+}
+
+body > section > section .tabed > ul > li {
+	display: inline-block;
+	margin-top: 4px;
+	padding: 5px 10px 7px 10px;
+}
+	/* Настройки jquery-tabs для меню опций */
+	body > section > section .tabed > ul > li.ui-tabs-active {
+		height: 15px;
+		background-color: white;
+		font: bold 1em "Helvetica Neue", Geneva, Arial, sans-serif;
+		border-radius: 10px 10px 0 0;
+		box-shadow: 0 0 3px rgba(0,0,0,0.2);
+	}
+	
+	body > section > section .tabed > ul > li.ui-tabs-active a { border: none; }
+	body > section > section .tabed > ul > li.ui-tabs-active a:hover { border: none; color: #333; }
+
+body > section > section .tabed > ul > li > a {
+	color: #333;
+	text-decoration: none;
+	border-bottom: 1px dotted #333;
+}
+
+	body > section > section .tabed > ul > li > a:hover { color: #f3c701; border-color: #f3c701; }
+
+/* Меню вложенных опций */
+.tabed > .propt > .sidepanel > #propt-icon {
+    min-height: 10px;
+}
+
+.tabed > .propt > .sidepanel > ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.tabed > .propt > .sidepanel > ul > li {
+    position: relative;
+    padding: 5px 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.tabed > .propt > .sidepanel > ul > li > div.abs-r {
+    top: 6px;
+    right: 10px;
+    color: silver;
+}
+
+.tabed > .propt > .sidepanel > ul > li > a {
+    color: gray;
+    text-decoration: none;
+}
+
+   .tabed > .propt > .sidepanel > ul > li > a:hover, .tabed > .propt > .sidepanel > ul > li > a:hover + .abs-r { color: #f3c701; }
+
+   .tabed > .propt > .sidepanel > ul > li.ui-tabs-active {
+       background-color: #EEE;
+       border-color: #DDD;
+   }
+   
+   .tabed > .propt > .sidepanel > ul > li.ui-tabs-active > div.abs-r, .tabed > .propt > .sidepanel > ul > li.ui-tabs-active > a { color: black; }
+   
+
+/* Основной текст страницы */
+body > section > section > article > div, body > section > section > article p {
+	margin: 2% 5%;
+	font: normal 1.1em/1.1em "Istok Web", Helvetica, Geneva, Arial, sans-serif;
+}
+
+body > section > section > article h3 {
+	margin: 0; padding: 0 5%;
+	margin-bottom: 0.9em;
+	font: bold 1em/1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+body > section > section > article > div[itemprop='desc'] {
+	position: relative;
+}
+
+body > section > section > article > div[itemprop='desc'] h5 {
+	display: none;
+}
+
+
+/* Подвал сайта */
+body > footer {
+	margin-top: 50px;
+	padding: 0; padding-bottom: 20px;
+	background-color: #f3edd4;
+	border-top: 3px solid #f3ebca;
+	overflow: hidden;
+}
+
+body > footer nav.sidepanel {
+	float: left;
+}
+
+body > footer nav > h3 {
+	margin: 10px 0;
+	font: bold 2.2em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: #f9f7ec;
+	text-shadow: 0 0 4px #cbb97d;
+}
+
+body > footer nav > li {
+	padding: 2px 0;
+	text-align: left;
+}
+
+body > footer nav > li > a {
+	padding: 2px 0;
+	color: #cbb97d;
+	text-decoration: none;
+}
+
+	body > footer nav > li > a:hover { text-decoration: underline; }
+	
+body > footer #ssnbox {
+	height: 100%;
+}

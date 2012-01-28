@@ -1,0 +1,339 @@
+body {
+	margin: 1em; padding: 0;
+	font: normal 67.5% "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+form {
+	position: relative;
+	margin: 0; padding: 0;
+	width: 605px;
+}
+
+label {
+	font: bold 1.5em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: black;
+}
+
+.disabled label, label.disabled { color: silver; }
+.disabled h2 { color: silver; }
+
+.hidden { display: none; }
+
+.wrong { background-color: #e8bbbb; }
+.proper { background-color: #d1e5cc; }
+.info { background-color: #FFF7DE; }
+
+.str_wrong { color: #e8bbbb; }
+.str_proper { color: #d1e5cc; }
+
+.column {
+	position: relative;
+	display: inline-block;
+	margin: 0; padding: 0;
+}
+
+	.column#left { width: 33%; float: left; }
+	.column#right { width: 66%; float: right; }
+	
+.column > div, .column > ul { margin: 0; padding: 0 0 1em 0; }
+.column > div > div, .column > ul > li { padding: 0.2em 1em; }
+
+/* Блоки */
+
+*[class*='block'] {
+	position: relative;
+	background-color: #EEE;
+	border-bottom: 0.7em solid white;
+}
+
+	.priceblock { border-bottom: none; }
+
+*[class*='block'] > h2 {
+	display: block;
+	background-color: #666;
+	border-bottom: 1px solid #FFF;
+	margin: 0 0 1em 0; padding: 0.5em 0.5em;
+	font: bold 1.1em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	text-align: center;
+	color: white;
+}
+
+/* Выбор продукта */
+ul#product {
+/*	display: none; */
+	margin: 0; padding: 0;
+	padding-bottom: 1em;
+	text-align: center;
+}
+
+ul#product > li {
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+}
+
+	ul#product > li:hover > span { color: #ed6e14; }
+	ul#product > li:hover a, ul#product > li.selected a { background-image: url('http://176.34.246.77/media/img/btnOver.png'); }
+
+ul#product > li > a {
+	display: block;
+	position: relative;
+	margin: auto; margin-bottom: 0.5em;
+	width: 64px; height: 64px;
+	background: transparent url('http://176.34.246.77/media/img/btnOut.png') no-repeat left top;
+}
+
+ul#product > li > span {
+	display: block;
+	width: 64px;
+}
+
+/* Блок выбора формата */
+.formatblock {
+	text-align: center;
+}
+
+/* Блок выбора бумаги */
+.paper > p { display: none; }
+
+/* Опции постпечатной обработки */
+ul.postblock {
+	list-style-type: none;
+}
+
+ul.postblock > li > label, ul.postblock > li > input {
+	font: normal 1em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+/* Оформление заказа */
+#checkout {
+	position: relative;
+	min-height: 100px;
+}
+
+#checkout > #trace {
+	width: 50%;
+	margin: 0;
+	padding: 0 1em;
+	color: gray;
+}
+
+#checkout > #trace > ul {
+	display: none;
+	margin: 0; padding: 0;
+	list-style-type: square;
+	list-style-position: inside;
+}
+
+#checkout > #trace > ul > li {
+	margin: 0; padding: 0;
+}
+
+#checkout > #trace > ul > li > pre {
+	margin: 0; padding: 0.2em 0;
+}
+
+#checkout > #trace > #message {
+	display: block;
+}
+
+#checkout > #price {
+	position: absolute;
+	right: 0; width: 30%;
+	top: 27px; bottom: 0;
+	text-align: center;
+	background-color: #D6D6D6;
+	border-left: 1px solid #FFF;
+}
+
+#checkout > #price > * {
+	display: block;
+}
+
+#checkout > #price > div {
+	position: absolute;
+	left: 0; right: 0;
+	bottom: 0.5em;
+}
+
+/* Выбор тиража/стоимости */
+#hours {
+	position: relative;
+	display: block;
+	white-space: nowrap;
+}
+
+.priceblock {
+	display: inline-block;
+	margin: 1% 2.15%;
+	width: 30%;
+	position: relative;
+	border-right: 1px dashed #BBB;
+}
+	.priceblock:last-child { border: none; }
+
+.priceblock > .icon {
+	position: relative;
+	margin: auto;
+	width: 88px; height: 64px;
+	background: transparent url('') no-repeat left center;
+	opacity: 0.3;
+}
+
+.priceblock > .icon > big {
+	position: relative;
+	top: 24px; left: 24px;
+	font: bold 2.4em/1.5em "Arial Black", Arial, Helvetica, Geneva, sans-serif;
+	text-shadow: 0.1em 0.1em 0.1em rgba(0,0,0,0.3);
+	color: black;
+}
+
+.priceblock > label {
+	display: block;
+	position: relative;
+	margin: auto;
+	margin-left: -20px; /* понимаю что не красиво, а что делать?  */
+	text-align: center;
+}
+
+.priceblock > .slider {
+	display: none;
+	position: relative;
+	height: 300px;
+	margin-top: 10px;
+	margin-left: 40px;
+}
+
+.priceblock > .slider > span {
+	display: block;
+	position: absolute;
+	width: 50px;
+	font: normal 0.75em/2em "Tahoma", Arial, Helvetica, Geneva, sans-serif;
+	color: gray;
+	border-top: 1px solid gray;
+}
+
+.priceblock > .slider > .quant {
+	left: -55px;
+	padding-right: 5px;
+	text-align: left;
+}
+
+.priceblock > .slider > .price {
+	right: -55px;
+	padding-left: 5px;
+	text-align: right;
+}
+
+.priceblock > .slider > span {
+	border-bottom: 1px dotted silver;
+}
+
+.priceblock > .slider > span.current {
+	color: #ee6e15;
+	border-color: #ee6e15;
+}
+
+.priceblock > .slider > span > small {
+	padding-left: 2px;
+}
+
+.priceblock > .slider > .fill {
+	position: absolute;
+	bottom: 0; left: 0; right: 0;
+	background-color: green;
+}
+
+.ui-slider-disabled > .fill { background-color: silver; }
+
+.floatsteps {
+	z-index: 10;
+	position: absolute;
+	left: 0; right: 0;
+	top: 0; bottom: 0;
+	background-color: #666;	
+	overflow: hidden;
+}
+
+	#register.floatsteps { bottom: 100%; }
+	#details.floatsteps { right: 100%; }
+	#userinfo.floatsteps, #files.floatsteps { left: 100%; }
+
+.floatsteps h1 { color: white; }
+.floatsteps, .floatsteps input[type='file'] { color: silver; }
+
+.floatsteps > ol {
+	display: none;
+	position: relative;
+	margin: 10% 0; padding: 0;
+	list-style-position: inside;
+}
+
+.floatsteps > ol > li {
+	margin: 0.5em;
+	padding: 4px 8px;
+	font-weight: bold;
+	border-radius: 12px;
+	border: 1px outset #f8e8e8;
+}
+
+.floatsteps > ol * {
+	font: normal 1em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	color: black;
+}
+
+.floatsteps > ol > li > label { font-weight: bold; }
+
+.floatsteps > ol > li > div {
+	position: relative;
+	float: right;
+	top: 0; right: 0;
+	margin-right: -2px;
+	padding: 0 9px;
+	background-color: silver;
+	color: white;
+	border-radius: 12px;
+}
+
+	.floatsteps > ol > li.wrong > div { background-color: red; }
+	.floatsteps > ol > li.proper > div { background-color: green; }
+
+/* Форма регистрации пользователя */
+input[name='is_legal'][checked] ~ #legal { display: block; }
+
+#userinfo > .fieldWrapper {
+	height: 2.5em;
+	margin: 0 -0.8em;
+	padding: 0.5em;
+}
+
+#userinfo > .fieldWrapper:nth-child(odd) { background: #444; }
+
+#userinfo > .fieldWrapper > label {
+	display: block;
+	float: left;
+	width: 46%;
+	padding-right: 0.5em;
+	text-align: right;
+}
+
+#userinfo > .fieldWrapper > input[type='text'] {
+	width: 50%;
+	font: normal 1.1em/1.5em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+}
+
+#userinfo .legal {
+	display: none;
+}
+
+#userinfo label {
+	width: 150px;
+	color: silver;
+}
+
+
+
+/* Переписываем поверх некоторые свойства */
+h2.error { background-color: #ed6e14; }
+h2.proper { background-color: #009900; }
