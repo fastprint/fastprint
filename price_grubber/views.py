@@ -3,6 +3,7 @@ from annoying.decorators import render_to, ajax_request
 from price_grubber.grubber.function import *
 from models import Product, Circulation, Company, PaperWeight, PrintTime
 import settings
+import pickle
 
 def insert_colorit_48h_130(tt):
     circulation = [500, 1000, 2000, 3000, 4000, 5000, 6000, 8000, 10000, 20000, 30000, 40000, 50000, 60000, 80000, 100000]
@@ -625,58 +626,86 @@ def grub_data(request):
 
 @ajax_request
 def get_data(request):
-    deltas = ['Gruppa M', 'Kolorit', 'Tetra']
-    last_update =  Product.objects.latest('grub_time')
-    updated = str(last_update.grub_time)
 
-    returned = []
+    try:
+        output1 = open(settings.MEDIA_ROOT+'/grubber_data/deltas.txt', 'r')
+        deltas = pickle.load(output1)
+        output1.close()
 
-    our_company_name = 'Fastprint'
-    company = Company.objects.get(name = our_company_name)
+        output2 = open(settings.MEDIA_ROOT+'/grubber_data/updated.txt', 'r')
+        updated = pickle.load(output2)
+        output2.close()
 
-    time_intervals = [48, 24, 4]
+        output3 = open(settings.MEDIA_ROOT+'/grubber_data/returned.txt', 'r')
+        returned = pickle.load(output3)
+        output3.close()
 
-    for time_interval in time_intervals:
-        paper_widths = [130, 170, 300]
+    except: # Если же файлов нет, делаем большую выборку из базы данных и создаём эти файлы.
+        deltas = ['Gruppa M', 'Kolorit', 'Tetra']
+        last_update =  Product.objects.latest('grub_time')
+        updated = str(last_update.grub_time)
 
-        for paper_w in paper_widths:
-            party = [500, 1000, 2000, 3000, 4000, 5000, 6000, 8000, 10000,]
-            returned_circulations = []
+        returned = []
 
-            for circulation_on_step in party:
-                circulation = Circulation.objects.get(circulation = circulation_on_step)
-                paper = PaperWeight.objects.get(paper_weight = paper_w)
-                time_obj = PrintTime.objects.get(print_time = time_interval)
-                products = Product.objects.filter(circulation = circulation, company = company, paper_weight = paper, print_time = time_obj)
+        our_company_name = 'Fastprint'
+        company = Company.objects.get(name = our_company_name)
 
-                returned_strings = []
+        time_intervals = [48, 24, 4]
 
-                for product in products:
-                    returned_string = {}
-                    returned_string['cost'] = product.cost
-                    returned_string['company'] = product.company.name
-                    returned_string['chromaticity'] = product.chromaticity.chromaticity
-                    returned_string['paper_weight'] = product.paper_weight.paper_weight
-                    returned_string['print_time'] = product.print_time.print_time
-                    returned_string['format'] = product.format.description
-                    returned_string['circulation'] = product.circulation.circulation
-                    try:
-                        returned_string['delta_gruppaM'] = product_delta_cost('Gruppa M', returned_string['chromaticity'], returned_string['format'], returned_string['circulation'], returned_string['print_time'], returned_string['paper_weight'], returned_string['cost'])
-                    except:
-                        returned_string['delta_gruppaM'] = '---'                        
-                    try:
-                        returned_string['delta_kolorit'] = product_delta_cost('Kolorit', returned_string['chromaticity'], returned_string['format'], returned_string['circulation'], returned_string['print_time'], returned_string['paper_weight'], returned_string['cost'])
-                    except:
-                        returned_string['delta_kolorit'] = '---'
-                    try:
-                        returned_string['delta_tetra'] = product_delta_cost('Tetra', returned_string['chromaticity'], returned_string['format'], returned_string['circulation'], returned_string['print_time'], returned_string['paper_weight'], returned_string['cost'])
-                    except:
-                        returned_string['delta_tetra'] = '---'
-                    returned_strings.append(returned_string)
+        for time_interval in time_intervals:
+            paper_widths = [130, 170, 300]
 
-                returned_circulations.append(returned_strings)
+            for paper_w in paper_widths:
+                party = [500, 1000, 2000, 3000, 4000, 5000, 6000, 8000, 10000,]
+                returned_circulations = []
 
-            returned.append({ time_interval: { paper_w : returned_circulations } })
+                for circulation_on_step in party:
+                    circulation = Circulation.objects.get(circulation = circulation_on_step)
+                    paper = PaperWeight.objects.get(paper_weight = paper_w)
+                    time_obj = PrintTime.objects.get(print_time = time_interval)
+                    products = Product.objects.filter(circulation = circulation, company = company, paper_weight = paper, print_time = time_obj)
+
+                    returned_strings = []
+
+                    for product in products:
+                        returned_string = {}
+                        returned_string['cost'] = product.cost
+                        returned_string['company'] = product.company.name
+                        returned_string['chromaticity'] = product.chromaticity.chromaticity
+                        returned_string['paper_weight'] = product.paper_weight.paper_weight
+                        returned_string['print_time'] = product.print_time.print_time
+                        returned_string['format'] = product.format.description
+                        returned_string['circulation'] = product.circulation.circulation
+                        try:
+                            returned_string['delta_gruppaM'] = product_delta_cost('Gruppa M', returned_string['chromaticity'], returned_string['format'], returned_string['circulation'], returned_string['print_time'], returned_string['paper_weight'], returned_string['cost'])
+                        except:
+                            returned_string['delta_gruppaM'] = '---'
+                        try:
+                            returned_string['delta_kolorit'] = product_delta_cost('Kolorit', returned_string['chromaticity'], returned_string['format'], returned_string['circulation'], returned_string['print_time'], returned_string['paper_weight'], returned_string['cost'])
+                        except:
+                            returned_string['delta_kolorit'] = '---'
+                        try:
+                            returned_string['delta_tetra'] = product_delta_cost('Tetra', returned_string['chromaticity'], returned_string['format'], returned_string['circulation'], returned_string['print_time'], returned_string['paper_weight'], returned_string['cost'])
+                        except:
+                            returned_string['delta_tetra'] = '---'
+                        returned_strings.append(returned_string)
+
+                    returned_circulations.append(returned_strings)
+
+                returned.append({ time_interval: { paper_w : returned_circulations } })
+
+        # Сериализуем 3 переменных по порядку
+        output = open(settings.MEDIA_ROOT+'/grubber_data/deltas.txt', 'w+')
+        pickle.dump(deltas, output)
+        output.close()
+
+        output = open(settings.MEDIA_ROOT+'/grubber_data/updated.txt', 'w+')
+        pickle.dump(updated, output)
+        output.close()
+
+        output = open(settings.MEDIA_ROOT+'/grubber_data/returned.txt', 'w+')
+        pickle.dump(returned, output)
+        output.close()
 
     return {'deltas': deltas, 'updated': updated, 'data': returned}
 
